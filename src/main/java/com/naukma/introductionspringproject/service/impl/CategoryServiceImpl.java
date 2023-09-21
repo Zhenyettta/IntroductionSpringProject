@@ -1,7 +1,6 @@
 package com.naukma.introductionspringproject.service.impl;
 
 import com.naukma.introductionspringproject.service.CategoryService;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 @Service

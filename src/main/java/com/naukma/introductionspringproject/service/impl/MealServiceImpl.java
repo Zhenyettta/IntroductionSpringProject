@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MealServiceImpl implements MealService {
-    @Autowired
     CategoryService categoryService;
 
-
+    @Autowired
+    public MealServiceImpl(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 }

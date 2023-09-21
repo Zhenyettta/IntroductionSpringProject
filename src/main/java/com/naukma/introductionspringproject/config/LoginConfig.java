@@ -7,11 +7,11 @@ import org.springframework.context.annotation.Configuration;
 public class LoginConfig {
 
     @Bean
-    LoginConfig getLoginConfig(){
+    public LoginConfig getLoginConfig(){
         return new LoginConfig();
     }
 
-    public String encodePasword(String password) {
+    public String encodePassword(String password) {
         return password + " encoded";
     }
 
