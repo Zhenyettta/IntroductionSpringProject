@@ -14,7 +14,7 @@ public class TestController {
     @Autowired
     LoginConfig loginConfig;
 
-    @Autowired
+
     UserService userService;
 
 
@@ -23,4 +23,8 @@ public class TestController {
         return ResponseEntity.ok(loginConfig.encodePassword("asd"));
     }
 
+    @Autowired
+    public void setUserServiceImpl(UserService userService) {
+        this.userService = userService;
+    }
 }

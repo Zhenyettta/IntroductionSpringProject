@@ -8,8 +8,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public String handleException(Exception e) {
-
        e.printStackTrace();
-        return "error";
+       return "error";
     }
 }

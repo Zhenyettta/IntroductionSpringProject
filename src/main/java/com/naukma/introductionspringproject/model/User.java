@@ -6,6 +6,9 @@ import lombok.*;
 @Setter
 @ToString
 @RequiredArgsConstructor
+
 public class User {
     private String firstName;
 }
+
+
