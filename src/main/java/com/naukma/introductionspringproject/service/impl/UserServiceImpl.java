@@ -9,11 +9,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    DiscountUtil discountUtil;
+    private final DiscountUtil discountUtil;
+    private final LoginConfig loginConfig;
 
     @Autowired
-    LoginConfig loginConfig;
+    public UserServiceImpl(DiscountUtil discountUtil, LoginConfig loginConfig) {
+        this.discountUtil = discountUtil;
+        this.loginConfig = loginConfig;
+    }
 
     @Override
     public User createUser() {
