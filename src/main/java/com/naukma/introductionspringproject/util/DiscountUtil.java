@@ -1,13 +1,9 @@
 package com.naukma.introductionspringproject.util;
 
-import com.naukma.introductionspringproject.model.User;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.naukma.introductionspringproject.config.DiscountConfig;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 
-@ConditionalOnClass(DiscountUtil.class)
 @EnableConfigurationProperties(DiscountProperties.class)
 public class DiscountUtil {
     private final DiscountConfig config;
@@ -16,7 +12,7 @@ public class DiscountUtil {
         this.config = config;
     }
 
-    public void createDiscount(User user){
-
+    public String createDiscount(){
+        return config.getProperties().getBirthday()+" asd";
     }
 }

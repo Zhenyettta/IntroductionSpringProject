@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser() {
         User user = new User();
-        discountUtil.createDiscount(user);
+        discountUtil.createDiscount();
         return user;
     }
 }
