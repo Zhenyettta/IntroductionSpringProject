@@ -3,7 +3,7 @@ package com.naukma.introductionspringproject.controller;
 import com.naukma.introductionspringproject.config.LoginConfig;
 import com.naukma.introductionspringproject.service.UserService;
 import com.naukma.introductionspringproject.util.ConditionalLoggerWrapper;
-import com.naukma.introductionspringproject.util.DiscountUtil;
+import com.naukma.springboot.DiscountUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

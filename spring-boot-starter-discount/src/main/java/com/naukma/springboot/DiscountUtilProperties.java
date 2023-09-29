@@ -1,6 +1,5 @@
-package com.naukma.introductionspringproject.util;
+package com.naukma.springboot;
 
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -8,7 +7,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "discount")
 @Getter
 @Setter
-public class DiscountProperties {
+public class DiscountUtilProperties {
     private double birthday;
     private double newYear;
 }
+

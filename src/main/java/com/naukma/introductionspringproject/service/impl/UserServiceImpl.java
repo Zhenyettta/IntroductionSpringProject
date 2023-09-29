@@ -3,7 +3,7 @@ package com.naukma.introductionspringproject.service.impl;
 import com.naukma.introductionspringproject.config.LoginConfig;
 import com.naukma.introductionspringproject.model.User;
 import com.naukma.introductionspringproject.service.UserService;
-import com.naukma.introductionspringproject.util.DiscountUtil;
+import com.naukma.springboot.DiscountUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
