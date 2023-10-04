@@ -5,6 +5,8 @@ import jakarta.persistence.GenerationType;
 import lombok.*;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -23,5 +25,6 @@ public class Meal {
     private Double price;
 
 
-
+    @ManyToMany(mappedBy="meals")
+    private List<Order> orders;
 }

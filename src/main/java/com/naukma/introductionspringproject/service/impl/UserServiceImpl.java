@@ -1,12 +1,12 @@
 package com.naukma.introductionspringproject.service.impl;
 
 import com.naukma.introductionspringproject.config.LoginConfig;
+import com.naukma.introductionspringproject.exception.NotFoundException;
 import com.naukma.introductionspringproject.model.User;
 import com.naukma.introductionspringproject.repository.UserRepo;
 import com.naukma.introductionspringproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -29,5 +29,22 @@ public class UserServiceImpl implements UserService {
         user.setLastName("aboba");
         userRepo.save(user);
         return user;
+    }
+
+    @Override
+    public User readUser(Long id) {
+        return userRepo.findById(id).orElseThrow(() -> new NotFoundException("User not found by id " + id));
+    }
+
+    @Override
+    public void updateUser(User user) {
+        User userNew = userRepo.findById(user.getId()).orElseThrow(() -> new NotFoundException("User not found by id " + user.getId()));
+        userNew.setFirstName(user.getFirstName());
+        userRepo.save(userNew);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepo.deleteById(id);
     }
 }
