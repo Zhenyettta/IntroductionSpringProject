@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Import;
 
 //@ComponentScan(basePackages = "com.naukma")
 @SpringBootApplication
-@Import(com.naukma.springboot.DiscountUtilConfig.class)
+
 public class IntroductionSpringProjectApplication {
 
 	public static void main(String[] args) {

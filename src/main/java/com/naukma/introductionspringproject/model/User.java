@@ -22,13 +22,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Pattern(regexp = NAME_REGEXP,
-            message = "Must start with a capital letter followed by one or more lowercase letters")
+//    @Pattern(regexp = NAME_REGEXP,
+//            message = "Must start with a capital letter followed by one or more lowercase letters")
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Pattern(regexp = NAME_REGEXP,
-            message = "Must start with a capital letter followed by one or more lowercase letters")
+//    @Pattern(regexp = NAME_REGEXP,
+//            message = "Must start with a capital letter followed by one or more lowercase letters")
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
@@ -36,8 +36,8 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?$\\.&]{8,}$",
-            message = "Must be minimum 8 characters, at least one uppercase, one lowercase, one number and one special character")
+//    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?$\\.&]{8,}$",
+//            message = "Must be minimum 8 characters, at least one uppercase, one lowercase, one number and one special character")
     @Column(nullable = false)
     private String password;
 

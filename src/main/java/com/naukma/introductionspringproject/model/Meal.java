@@ -9,6 +9,8 @@ import jakarta.persistence.*;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@Entity
+@Table(name = "meals")
 public class Meal {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
