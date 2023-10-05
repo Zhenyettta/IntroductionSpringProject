@@ -2,7 +2,6 @@ package com.naukma.introductionspringproject.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -35,6 +34,9 @@ public class User {
     @Email(message = "Must be a valid e-mail address")
     @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
 //    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?$\\.&]{8,}$",
 //            message = "Must be minimum 8 characters, at least one uppercase, one lowercase, one number and one special character")

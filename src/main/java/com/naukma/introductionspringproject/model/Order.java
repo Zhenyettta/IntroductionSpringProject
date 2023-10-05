@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +24,12 @@ public class Order {
     @NotNull
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(name = "order_taken", nullable = false)
+    private LocalDateTime orderTaken;
+
+    @Column(name = "order_given")
+    private LocalDateTime orderGiven;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "orders_meals",
