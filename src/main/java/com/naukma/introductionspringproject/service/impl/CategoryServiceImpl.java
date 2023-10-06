@@ -14,12 +14,10 @@ import java.time.LocalDateTime;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    MealService mealService;
     CategoryRepo categoryRepo;
 
     @Autowired
-    public void setCategoryServiceImpl(MealService mealService, CategoryRepo categoryRepo) {
-        this.mealService = mealService;
+    public void setCategoryServiceImpl(CategoryRepo categoryRepo) {
         this.categoryRepo = categoryRepo;
     }
 
