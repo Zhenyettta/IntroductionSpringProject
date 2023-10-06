@@ -7,5 +7,4 @@ public interface UserService {
     User readUser(Long id);
     void updateUser(User user);
     void deleteUser(Long id);
-
 }
