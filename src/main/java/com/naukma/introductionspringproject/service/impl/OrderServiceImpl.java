@@ -2,7 +2,6 @@ package com.naukma.introductionspringproject.service.impl;
 
 import com.naukma.introductionspringproject.exception.NotFoundException;
 import com.naukma.introductionspringproject.model.Order;
-import com.naukma.introductionspringproject.model.User;
 import com.naukma.introductionspringproject.repository.OrderRepo;
 import com.naukma.introductionspringproject.service.MealService;
 import com.naukma.introductionspringproject.service.OrderService;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 @Service
 public class OrderServiceImpl implements OrderService {
