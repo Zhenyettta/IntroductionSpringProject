@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" packages="com.naukma.introductionspringproject.config">
+    <Appenders>
+        <CustomFileAppender name="FileAppender" fileName="your-log-file.log">
+            <CustomLayout charset="UTF-8"/>
+        </CustomFileAppender>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="FileAppender" />
+        </Root>
+    </Loggers>
+</Configuration>

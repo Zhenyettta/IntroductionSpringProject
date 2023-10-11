@@ -3,7 +3,7 @@ package com.naukma.introductionspringproject.controller;
 import com.naukma.introductionspringproject.config.LoginConfig;
 import com.naukma.introductionspringproject.model.User;
 import com.naukma.introductionspringproject.service.UserService;
-import com.naukma.introductionspringproject.util.ConditionalLoggerWrapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/test")
 public class TestController {
     private LoginConfig loginConfig;
-    private ConditionalLoggerWrapper logger;
+
     private UserService userService;
 
 
@@ -22,10 +22,7 @@ public class TestController {
         this.loginConfig = loginConfig;
         this.userService = userService;
     }
-    @Autowired(required = false)
-    public void setConditionalLoggerWrapper(ConditionalLoggerWrapper conditionalLoggerWrapper) {
-        this.logger = conditionalLoggerWrapper;
-    }
+
 
     @PutMapping()
     public ResponseEntity<Object> createUser() {
