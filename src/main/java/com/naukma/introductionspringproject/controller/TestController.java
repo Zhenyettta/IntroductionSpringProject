@@ -1,7 +1,9 @@
 package com.naukma.introductionspringproject.controller;
 
 import com.naukma.introductionspringproject.config.LoginConfig;
+import com.naukma.introductionspringproject.model.Meal;
 import com.naukma.introductionspringproject.model.User;
+import com.naukma.introductionspringproject.service.MealService;
 import com.naukma.introductionspringproject.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,14 @@ public class TestController {
     private LoginConfig loginConfig;
 
     private UserService userService;
+    private MealService mealService;
 
 
     @Autowired
-    public TestController(LoginConfig loginConfig, UserService userService) {
+    public TestController(LoginConfig loginConfig, UserService userService, MealService mealService) {
         this.loginConfig = loginConfig;
         this.userService = userService;
+        this.mealService = mealService;
     }
 
 
@@ -36,8 +40,8 @@ public class TestController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> updateUser(@RequestBody User user){
-        userService.updateUser(user);
+    public ResponseEntity<Object> updateUser(@RequestBody Meal meal){
+        mealService.updateMeal(meal);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

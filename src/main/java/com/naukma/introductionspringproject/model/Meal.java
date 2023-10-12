@@ -1,10 +1,10 @@
 package com.naukma.introductionspringproject.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -28,14 +28,16 @@ public class Meal {
     @Column(nullable = false)
     private Integer amount;
 
+    @ToString.Exclude
     @ManyToOne
-    @NotNull
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToMany(mappedBy="meals")
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "meals")
     private List<Order> orders;
 
+    @ToString.Exclude
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "meals_tags",
             joinColumns = @JoinColumn(name = "meal_id"),

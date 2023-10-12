@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="info" packages="com.naukma.introductionspringproject.config">
+<Configuration status="info">
     <Appenders>
         <CustomFileAppender name="FileAppender" fileName="your-log-file.log">
-            <CustomLayout charset="UTF-8"/>
         </CustomFileAppender>
+        <Console name="Console" target="SYSTEM_OUT">
+            <Filters>
+                <MarkerFilter marker="MyMarker"/>
+            </Filters>
+            <CustomLayout/>
+        </Console>
     </Appenders>
     <Loggers>
         <Root level="info">
             <AppenderRef ref="FileAppender" />
+            <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
 </Configuration>

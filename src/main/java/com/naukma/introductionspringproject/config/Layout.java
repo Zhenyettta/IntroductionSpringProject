@@ -10,6 +10,9 @@ import org.apache.logging.log4j.util.Strings;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 @Plugin(name = "CustomLayout", category = Core.CATEGORY_NAME, elementType = Layout.ELEMENT_TYPE, printObject = true)
 public class Layout extends AbstractStringLayout {
 
@@ -17,12 +20,21 @@ public class Layout extends AbstractStringLayout {
         super(charset, null, null);
     }
 
+    @PluginFactory
+    public static Layout createLayout() {
+        return new Layout(StandardCharsets.UTF_8);
+    }
+
     @Override
     public String toSerializable(LogEvent event) {
-        return String.format("Timestamp: %s, Logger: %s, Level: %s, Message: %s%n",
-                Instant.ofEpochMilli(event.getTimeMillis()),
+        Instant instant = Instant.ofEpochMilli(event.getTimeMillis());
+        ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+        return String.format("Timestamp: %s, Logger: %s, Level: %s, ThreadContext: %s, Marker: %s, Message: %s%n",
+                zonedDateTime,
                 event.getLoggerName(),
                 event.getLevel(),
+                event.getContextMap(),
+                event.getMarker(),
                 event.getMessage().getFormattedMessage());
     }
 
@@ -34,11 +46,6 @@ public class Layout extends AbstractStringLayout {
     @Override
     public byte[] getFooter() {
         return Strings.EMPTY.getBytes();
-    }
-
-    @PluginFactory
-    public static Layout createLayout() {
-        return new Layout(StandardCharsets.UTF_8);
     }
 
 }
