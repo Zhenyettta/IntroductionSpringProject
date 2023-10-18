@@ -28,12 +28,6 @@ public class TestController {
     }
 
 
-    @PutMapping()
-    public ResponseEntity<Object> createUser() {
-        userService.createUser();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Object> getById(@PathVariable Long id){
         return new ResponseEntity<>(userService.readUser(id), HttpStatus.OK);
