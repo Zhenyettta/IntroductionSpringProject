@@ -1,7 +1,7 @@
 package com.naukma.introductionspringproject.service.impl;
 
 import com.naukma.introductionspringproject.exception.NotFoundException;
-import com.naukma.introductionspringproject.model.Order;
+import com.naukma.introductionspringproject.entity.OrderEntity;
 import com.naukma.introductionspringproject.repository.OrderRepo;
 import com.naukma.introductionspringproject.service.MealService;
 import com.naukma.introductionspringproject.service.OrderService;
@@ -22,21 +22,21 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order createOrder() {
-        Order order = new Order();
+    public OrderEntity createOrder() {
+        OrderEntity order = new OrderEntity();
         order.setOrderGiven(LocalDateTime.of(2023, 9, 14, 12, 30));
         orderRepo.save(order);
         return order;
     }
 
     @Override
-    public Order readOrder(Long id) {
+    public OrderEntity readOrder(Long id) {
         return orderRepo.findById(id).orElseThrow(() -> new NotFoundException("Order not found by id " + id));
     }
 
     @Override
-    public void updateOrder(Order order) {
-        Order orderNew = orderRepo.findById(order.getId()).orElseThrow(() -> new NotFoundException("Order not found by id " + order.getId()));
+    public void updateOrder(OrderEntity order) {
+        OrderEntity orderNew = orderRepo.findById(order.getId()).orElseThrow(() -> new NotFoundException("Order not found by id " + order.getId()));
         orderNew.setUser(order.getUser());
         orderNew.setMeals(order.getMeals());
         orderNew.setOrderGiven(order.getOrderGiven());

@@ -1,8 +1,7 @@
 package com.naukma.introductionspringproject.controller;
 
 import com.naukma.introductionspringproject.config.LoginConfig;
-import com.naukma.introductionspringproject.model.Meal;
-import com.naukma.introductionspringproject.model.User;
+import com.naukma.introductionspringproject.entity.MealEntity;
 import com.naukma.introductionspringproject.service.MealService;
 import com.naukma.introductionspringproject.service.UserService;
 
@@ -34,7 +33,7 @@ public class TestController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> updateUser(@RequestBody Meal meal){
+    public ResponseEntity<Object> updateUser(@RequestBody MealEntity meal){
         mealService.updateMeal(meal);
         return new ResponseEntity<>(HttpStatus.OK);
     }

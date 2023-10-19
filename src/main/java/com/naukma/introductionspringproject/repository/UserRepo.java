@@ -1,8 +1,7 @@
 package com.naukma.introductionspringproject.repository;
 
-import com.naukma.introductionspringproject.model.User;
+import com.naukma.introductionspringproject.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-public interface UserRepo extends JpaRepository<User, Long> {
+public interface UserRepo extends JpaRepository<UserEntity, Long> {
 }

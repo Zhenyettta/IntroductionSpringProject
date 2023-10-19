@@ -2,8 +2,7 @@ package com.naukma.introductionspringproject.service.impl;
 
 
 import com.naukma.introductionspringproject.exception.NotFoundException;
-import com.naukma.introductionspringproject.model.Category;
-import com.naukma.introductionspringproject.model.Meal;
+import com.naukma.introductionspringproject.entity.MealEntity;
 import com.naukma.introductionspringproject.repository.MealRepo;
 import com.naukma.introductionspringproject.service.CategoryService;
 import com.naukma.introductionspringproject.service.MealService;
@@ -16,7 +15,6 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 @Service
 public class MealServiceImpl implements MealService {
@@ -38,21 +36,21 @@ public class MealServiceImpl implements MealService {
 
 
     @Override
-    public Meal createMeal() {
-        Meal meal = new Meal();
+    public MealEntity createMeal() {
+        MealEntity meal = new MealEntity();
         meal.setPrice(1997.0);
         mealRepo.save(meal);
         return meal;
     }
 
     @Override
-    public Meal readMeal(Long id) {
+    public MealEntity readMeal(Long id) {
         return mealRepo.findById(id).orElseThrow(() -> new NotFoundException("Meal not found by id " + id));
     }
 
     @Override
-    public void updateMeal(Meal meal) {
-        Meal mealNew = mealRepo.findById(meal.getId()).orElseThrow(() -> new NotFoundException("Meal not found by id " + meal.getId()));
+    public void updateMeal(MealEntity meal) {
+        MealEntity mealNew = mealRepo.findById(meal.getId()).orElseThrow(() -> new NotFoundException("Meal not found by id " + meal.getId()));
         ThreadContext.put("MealBefore", mealNew.toString());
         mealNew.setName(meal.getName());
         mealNew.setPrice(meal.getPrice());

@@ -4,12 +4,11 @@ import com.google.gson.*;
 import com.naukma.introductionspringproject.config.LoginConfig;
 import com.naukma.introductionspringproject.dto.UserDTO;
 import com.naukma.introductionspringproject.exception.NotFoundException;
-import com.naukma.introductionspringproject.model.User;
+import com.naukma.introductionspringproject.entity.UserEntity;
 import com.naukma.introductionspringproject.repository.UserRepo;
 import com.naukma.introductionspringproject.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -35,8 +34,8 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public User createUser(UserDTO user) {
-        User user1 = modelMapper.map(user, User.class);
+    public UserEntity createUser(UserDTO user) {
+        UserEntity user1 = modelMapper.map(user, UserEntity.class);
         RestTemplate restTemplate = new RestTemplate();
         try {
             String resourceUrl = "https://api.open-meteo.com/v1/forecast?latitude=50.450001&longitude=30.523333&hourly=temperature_2m&timezone=auto";
@@ -63,13 +62,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User readUser(Long id) {
+    public UserEntity readUser(Long id) {
         return userRepo.findById(id).orElseThrow(() -> new NotFoundException("User not found by id " + id));
     }
 
     @Override
     public void updateUser(UserDTO user) {
-        User userNew = userRepo.findById(user.getId()).orElseThrow(() -> new NotFoundException("User not found by id " + user.getId()));
+        UserEntity userNew = userRepo.findById(user.getId()).orElseThrow(() -> new NotFoundException("User not found by id " + user.getId()));
         userNew.setFirstName(user.getFirstName());
         userRepo.save(userNew);
     }

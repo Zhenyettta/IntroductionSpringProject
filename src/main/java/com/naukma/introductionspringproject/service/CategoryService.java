@@ -1,11 +1,10 @@
 package com.naukma.introductionspringproject.service;
 
-import com.naukma.introductionspringproject.model.Category;
-import com.naukma.introductionspringproject.model.Meal;
+import com.naukma.introductionspringproject.entity.CategoryEntity;
 
 public interface CategoryService {
-    Category createCategory();
-    Category readCategory(Long id);
-    void updateCategory(Category category);
+    CategoryEntity createCategory();
+    CategoryEntity readCategory(Long id);
+    void updateCategory(CategoryEntity category);
     void deleteCategory(Long id);
 }

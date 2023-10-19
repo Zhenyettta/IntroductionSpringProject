@@ -1,7 +1,6 @@
 package com.naukma.introductionspringproject.controller;
 
 import com.naukma.introductionspringproject.dto.UserDTO;
-import com.naukma.introductionspringproject.model.User;
 import com.naukma.introductionspringproject.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

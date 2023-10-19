@@ -1,7 +1,7 @@
 package com.naukma.introductionspringproject.repository;
 
-import com.naukma.introductionspringproject.model.Tag;
+import com.naukma.introductionspringproject.entity.TagEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TagRepo extends JpaRepository<Tag, Long> {
+public interface TagRepo extends JpaRepository<TagEntity, Long> {
 }

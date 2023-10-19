@@ -1,16 +1,11 @@
 package com.naukma.introductionspringproject.service.impl;
 
 import com.naukma.introductionspringproject.exception.NotFoundException;
-import com.naukma.introductionspringproject.model.Category;
-import com.naukma.introductionspringproject.model.Order;
+import com.naukma.introductionspringproject.entity.CategoryEntity;
 import com.naukma.introductionspringproject.repository.CategoryRepo;
-import com.naukma.introductionspringproject.repository.OrderRepo;
 import com.naukma.introductionspringproject.service.CategoryService;
-import com.naukma.introductionspringproject.service.MealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -22,21 +17,21 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category createCategory() {
-        Category category = new Category();
+    public CategoryEntity createCategory() {
+        CategoryEntity category = new CategoryEntity();
         category.setName("Category1");
         categoryRepo.save(category);
         return category;
     }
 
     @Override
-    public Category readCategory(Long id) {
+    public CategoryEntity readCategory(Long id) {
         return categoryRepo.findById(id).orElseThrow(() -> new NotFoundException("Category not found by id " + id));
     }
 
     @Override
-    public void updateCategory(Category category) {
-        Category categoryNew = categoryRepo.findById(category.getId()).orElseThrow(() -> new NotFoundException("Category not found by id " + category.getId()));
+    public void updateCategory(CategoryEntity category) {
+        CategoryEntity categoryNew = categoryRepo.findById(category.getId()).orElseThrow(() -> new NotFoundException("Category not found by id " + category.getId()));
         categoryNew.setMeals(category.getMeals());
         categoryNew.setName(category.getName());
         categoryRepo.save(categoryNew);
