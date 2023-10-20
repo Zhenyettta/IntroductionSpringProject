@@ -1,14 +1,17 @@
 package com.naukma.introductionspringproject.service.impl;
 
 
+import com.naukma.introductionspringproject.entity.UserEntity;
 import com.naukma.introductionspringproject.exception.NotFoundException;
 import com.naukma.introductionspringproject.entity.MealEntity;
+import com.naukma.introductionspringproject.model.Meal;
 import com.naukma.introductionspringproject.repository.MealRepo;
 import com.naukma.introductionspringproject.service.CategoryService;
 import com.naukma.introductionspringproject.service.MealService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.apache.logging.log4j.Marker;
@@ -18,44 +21,43 @@ import java.util.Arrays;
 
 @Service
 public class MealServiceImpl implements MealService {
+    private final ModelMapper modelMapper;
+
     private static final Marker MY_MARKER = MarkerManager.getMarker("MyMarker");
     private static final Logger logger = LogManager.getLogger(MealServiceImpl.class);
     CategoryService categoryService;
     MealRepo mealRepo;
 
     @Autowired
-    public MealServiceImpl(CategoryService categoryService, MealRepo mealRepo) {
+    public MealServiceImpl(ModelMapper modelMapper, CategoryService categoryService, MealRepo mealRepo) {
+        this.modelMapper = modelMapper;
         this.categoryService = categoryService;
         this.mealRepo = mealRepo;
     }
 
-
-
     @Override
-    public MealEntity createMeal() {
-        MealEntity meal = new MealEntity();
-        meal.setPrice(1997.0);
-        mealRepo.save(meal);
+    public Meal createMeal(Meal meal) {
+        mealRepo.save(modelMapper.map(meal, MealEntity.class));
         return meal;
     }
 
     @Override
-    public MealEntity readMeal(Long id) {
-        return mealRepo.findById(id).orElseThrow(() -> new NotFoundException("Meal not found by id " + id));
+    public Meal readMeal(Long id) {
+        return modelMapper.map(mealRepo.findById(id).orElseThrow(() -> new NotFoundException("Meal not found by id " + id)), Meal.class);
     }
 
     @Override
-    public void updateMeal(MealEntity meal) {
-        MealEntity mealNew = mealRepo.findById(meal.getId()).orElseThrow(() -> new NotFoundException("Meal not found by id " + meal.getId()));
+    public void updateMeal(Meal meal) {
+        Meal mealNew = modelMapper.map(mealRepo.findById(meal.getId()).orElseThrow(() -> new NotFoundException("Meal not found by id " + meal.getId())), Meal.class);
         ThreadContext.put("MealBefore", mealNew.toString());
         mealNew.setName(meal.getName());
         mealNew.setPrice(meal.getPrice());
-        mealNew.setTags(meal.getTags());
+        mealNew.setCategoryId(meal.getCategoryId());
         mealNew.setAmount(meal.getAmount());
         ThreadContext.put("MealAfter", mealNew.toString());
 
         logger.info(MY_MARKER, "Test log");
-        mealRepo.save(mealNew);
+        mealRepo.save(modelMapper.map(mealNew, MealEntity.class));
         ThreadContext.removeAll(Arrays.asList("MealBefore", "MealAfter"));
     }
 

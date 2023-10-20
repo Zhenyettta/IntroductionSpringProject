@@ -1,16 +1,15 @@
 package com.naukma.introductionspringproject.controller;
 
 import com.naukma.introductionspringproject.dto.CategoryDTO;
-import com.naukma.introductionspringproject.dto.UserDTO;
 import com.naukma.introductionspringproject.service.CategoryService;
-import com.naukma.introductionspringproject.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/category")
+@RestController
+@RequestMapping("/categories")
 @Validated
 public class CategoryController {
     CategoryService categoryService;
@@ -39,5 +38,4 @@ public class CategoryController {
         categoryService.deleteCategory(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

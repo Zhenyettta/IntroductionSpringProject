@@ -1,13 +1,14 @@
 package com.naukma.introductionspringproject.service;
 
 import com.naukma.introductionspringproject.entity.MealEntity;
+import com.naukma.introductionspringproject.model.Meal;
 
 public interface MealService {
-    MealEntity createMeal();
+    Meal createMeal(Meal meal);
 
-    MealEntity readMeal(Long id);
+    Meal readMeal(Long id);
 
-    void updateMeal(MealEntity meal);
+    void updateMeal(Meal meal);
 
     void deleteMeal(Long id);
 
