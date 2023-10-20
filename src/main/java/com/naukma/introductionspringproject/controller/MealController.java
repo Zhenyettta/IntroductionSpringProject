@@ -27,12 +27,12 @@ public class MealController {
         return new ResponseEntity<>(mealService.readMeal(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PutMapping
     public ResponseEntity<Object> updateMeal(@Valid @RequestBody MealDTO mealDTO){
         mealService.updateMeal(modelMapper.map(mealDTO, Meal.class));
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PutMapping
+    @PostMapping
     public ResponseEntity<Object> createMeal(@Valid @RequestBody MealDTO mealDTO){
         mealService.createMeal(modelMapper.map(mealDTO, Meal.class));
         return new ResponseEntity<>(HttpStatus.OK);

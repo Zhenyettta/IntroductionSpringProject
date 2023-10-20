@@ -20,12 +20,12 @@ public class UserController {
         return new ResponseEntity<>(userService.readUser(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PutMapping
     public ResponseEntity<Object> updateUser(@Valid @RequestBody UserDTO user){
         userService.updateUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PutMapping
+    @PostMapping
     public ResponseEntity<Object> createUser(@Valid @RequestBody UserDTO user){
         userService.createUser(user);
         return new ResponseEntity<>(HttpStatus.OK);

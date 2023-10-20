@@ -20,12 +20,12 @@ public class OrderController {
         return new ResponseEntity<>(orderService.readOrder(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PutMapping
     public ResponseEntity<Object> updateOrder(@Valid @RequestBody OrderDTO order){
         orderService.updateOrder(order);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PutMapping
+    @PostMapping
     public ResponseEntity<Object> createOrder(@Valid @RequestBody OrderDTO category){
         orderService.createOrder(category);
         return new ResponseEntity<>(HttpStatus.OK);

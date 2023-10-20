@@ -22,12 +22,12 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.readCategory(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PutMapping
     public ResponseEntity<Object> updateCategory(@Valid @RequestBody CategoryDTO category){
         categoryService.updateCategory(category);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PutMapping
+    @PostMapping
     public ResponseEntity<Object> createCategory(@Valid @RequestBody CategoryDTO category){
         categoryService.createCategory(category);
         return new ResponseEntity<>(HttpStatus.OK);
