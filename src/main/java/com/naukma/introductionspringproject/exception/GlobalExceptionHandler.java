@@ -1,6 +1,5 @@
 package com.naukma.introductionspringproject.exception;
 
-
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.http.HttpStatus;
@@ -24,6 +23,12 @@ public class GlobalExceptionHandler {
     public final ResponseEntity<Object> handleNotFoundException(NotFoundException ex, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(getErrorAttributes(request));
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exceptionResponse);
+    }
+
+    @ExceptionHandler(UniqueEmailException.class)
+    public final ResponseEntity<Object> handleUniqueEmailException(UniqueEmailException ex, WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(getErrorAttributes(request));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(exceptionResponse);
     }
 
     private Map<String, Object> getErrorAttributes(WebRequest webRequest) {
