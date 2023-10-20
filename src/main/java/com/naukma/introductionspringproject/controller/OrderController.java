@@ -24,13 +24,19 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> updateCategory(@Valid @RequestBody OrderDTO order){
+    public ResponseEntity<Object> updateOrder(@Valid @RequestBody OrderDTO order){
         orderService.updateOrder(order);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PutMapping
-    public ResponseEntity<Object> createUser(@Valid @RequestBody OrderDTO category){
+    public ResponseEntity<Object> createOrder(@Valid @RequestBody OrderDTO category){
         orderService.createOrder(category);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteOrder(@PathVariable Long id){
+        orderService.deleteOrder(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
+

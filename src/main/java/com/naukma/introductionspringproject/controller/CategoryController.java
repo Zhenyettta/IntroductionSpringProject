@@ -29,8 +29,14 @@ public class CategoryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PutMapping
-    public ResponseEntity<Object> createUser(@Valid @RequestBody CategoryDTO category){
+    public ResponseEntity<Object> createCategory(@Valid @RequestBody CategoryDTO category){
         categoryService.createCategory(category);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteCategory(@PathVariable Long id){
+        categoryService.deleteCategory(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

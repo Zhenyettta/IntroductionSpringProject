@@ -24,15 +24,11 @@ public class MealServiceImpl implements MealService {
     MealRepo mealRepo;
 
     @Autowired
-    public MealServiceImpl(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
-
-    @Autowired
-    public void setCategoryServiceImpl(CategoryService categoryService, MealRepo mealRepo) {
+    public MealServiceImpl(CategoryService categoryService, MealRepo mealRepo) {
         this.categoryService = categoryService;
         this.mealRepo = mealRepo;
     }
+
 
 
     @Override
