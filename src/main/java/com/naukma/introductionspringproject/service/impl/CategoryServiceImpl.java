@@ -1,5 +1,6 @@
 package com.naukma.introductionspringproject.service.impl;
 
+import com.naukma.introductionspringproject.dto.CategoryDTO;
 import com.naukma.introductionspringproject.exception.NotFoundException;
 import com.naukma.introductionspringproject.entity.CategoryEntity;
 import com.naukma.introductionspringproject.repository.CategoryRepo;
@@ -17,7 +18,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryEntity createCategory() {
+    public CategoryEntity createCategory(CategoryDTO categoryDTO) {
         CategoryEntity category = new CategoryEntity();
         category.setName("Category1");
         categoryRepo.save(category);
@@ -30,9 +31,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void updateCategory(CategoryEntity category) {
+    public void updateCategory(CategoryDTO category) {
         CategoryEntity categoryNew = categoryRepo.findById(category.getId()).orElseThrow(() -> new NotFoundException("Category not found by id " + category.getId()));
-        categoryNew.setMeals(category.getMeals());
         categoryNew.setName(category.getName());
         categoryRepo.save(categoryNew);
     }

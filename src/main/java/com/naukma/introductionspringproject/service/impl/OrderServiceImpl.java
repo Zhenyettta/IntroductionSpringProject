@@ -1,5 +1,6 @@
 package com.naukma.introductionspringproject.service.impl;
 
+import com.naukma.introductionspringproject.dto.OrderDTO;
 import com.naukma.introductionspringproject.exception.NotFoundException;
 import com.naukma.introductionspringproject.entity.OrderEntity;
 import com.naukma.introductionspringproject.repository.OrderRepo;
@@ -22,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderEntity createOrder() {
+    public OrderEntity createOrder(OrderDTO orderS) {
         OrderEntity order = new OrderEntity();
         order.setOrderGiven(LocalDateTime.of(2023, 9, 14, 12, 30));
         orderRepo.save(order);
@@ -35,10 +36,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateOrder(OrderEntity order) {
+    public void updateOrder(OrderDTO order) {
         OrderEntity orderNew = orderRepo.findById(order.getId()).orElseThrow(() -> new NotFoundException("Order not found by id " + order.getId()));
-        orderNew.setUser(order.getUser());
-        orderNew.setMeals(order.getMeals());
         orderNew.setOrderGiven(order.getOrderGiven());
         orderNew.setOrderTaken(order.getOrderTaken());
         orderRepo.save(orderNew);
