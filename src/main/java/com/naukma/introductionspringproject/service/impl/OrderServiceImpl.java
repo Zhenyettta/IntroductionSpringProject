@@ -1,42 +1,40 @@
 package com.naukma.introductionspringproject.service.impl;
 
-import com.naukma.introductionspringproject.dto.OrderDTO;
 import com.naukma.introductionspringproject.exception.NotFoundException;
 import com.naukma.introductionspringproject.entity.OrderEntity;
+import com.naukma.introductionspringproject.model.Order;
 import com.naukma.introductionspringproject.repository.OrderRepo;
 import com.naukma.introductionspringproject.service.MealService;
 import com.naukma.introductionspringproject.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    MealService mealService;
-    OrderRepo orderRepo;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    public void setMealServiceImpl(MealService mealService, OrderRepo orderRepo) {
+    private final MealService mealService;
+    private final OrderRepo orderRepo;
+
+    public OrderServiceImpl(ModelMapper modelMapper, MealService mealService, OrderRepo orderRepo) {
+        this.modelMapper = modelMapper;
         this.mealService = mealService;
         this.orderRepo = orderRepo;
     }
 
     @Override
-    public OrderEntity createOrder(OrderDTO orderS) {
-        OrderEntity order = new OrderEntity();
-        order.setOrderGiven(LocalDateTime.of(2023, 9, 14, 12, 30));
-        orderRepo.save(order);
+    public Order createOrder(Order order) {
+        orderRepo.save(modelMapper.map(order, OrderEntity.class));
         return order;
     }
 
     @Override
-    public OrderEntity readOrder(Long id) {
-        return orderRepo.findById(id).orElseThrow(() -> new NotFoundException("Order not found by id " + id));
+    public Order readOrder(Long id) {
+        return modelMapper.map(orderRepo.findById(id).orElseThrow(() -> new NotFoundException("Order not found by id " + id)), Order.class);
     }
 
     @Override
-    public void updateOrder(OrderDTO order) {
+    public void updateOrder(Order order) {
         OrderEntity orderNew = orderRepo.findById(order.getId()).orElseThrow(() -> new NotFoundException("Order not found by id " + order.getId()));
         orderNew.setOrderGiven(order.getOrderGiven());
         orderNew.setOrderTaken(order.getOrderTaken());
@@ -45,6 +43,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrder(Long id) {
-        orderRepo.deleteById(id);
+        if (orderRepo.existsById(id))
+            orderRepo.deleteById(id);
+        else throw new NotFoundException("Order not found by id " + id);
     }
 }

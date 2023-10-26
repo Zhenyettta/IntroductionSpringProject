@@ -1,37 +1,37 @@
 package com.naukma.introductionspringproject.service.impl;
 
-import com.naukma.introductionspringproject.dto.CategoryDTO;
-import com.naukma.introductionspringproject.exception.NotFoundException;
 import com.naukma.introductionspringproject.entity.CategoryEntity;
+import com.naukma.introductionspringproject.exception.NotFoundException;
+import com.naukma.introductionspringproject.model.Category;
 import com.naukma.introductionspringproject.repository.CategoryRepo;
 import com.naukma.introductionspringproject.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    CategoryRepo categoryRepo;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    public void setCategoryServiceImpl(CategoryRepo categoryRepo) {
+    private final CategoryRepo categoryRepo;
+
+    public CategoryServiceImpl(ModelMapper modelMapper, CategoryRepo categoryRepo) {
+        this.modelMapper = modelMapper;
         this.categoryRepo = categoryRepo;
     }
 
     @Override
-    public CategoryEntity createCategory(CategoryDTO categoryDTO) {
-        CategoryEntity category = new CategoryEntity();
-        category.setName("Category1");
-        categoryRepo.save(category);
+    public Category createCategory(Category category) {
+        categoryRepo.save(modelMapper.map(category, CategoryEntity.class));
         return category;
     }
 
     @Override
-    public CategoryEntity readCategory(Long id) {
-        return categoryRepo.findById(id).orElseThrow(() -> new NotFoundException("Category not found by id " + id));
+    public Category readCategory(Long id) {
+        return modelMapper.map(categoryRepo.findById(id).orElseThrow(() -> new NotFoundException("Category not found by id " + id)), Category.class);
     }
 
     @Override
-    public void updateCategory(CategoryDTO category) {
+    public void updateCategory(Category category) {
         CategoryEntity categoryNew = categoryRepo.findById(category.getId()).orElseThrow(() -> new NotFoundException("Category not found by id " + category.getId()));
         categoryNew.setName(category.getName());
         categoryRepo.save(categoryNew);
@@ -39,7 +39,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategory(Long id) {
-        categoryRepo.deleteById(id);
-    }
+        if (categoryRepo.existsById(id))
+            categoryRepo.deleteById(id);
+        else throw new NotFoundException("Category not found by id " + id);    }
 
 }

@@ -1,6 +1,5 @@
 package com.naukma.introductionspringproject.service;
 
-import com.naukma.introductionspringproject.entity.MealEntity;
 import com.naukma.introductionspringproject.model.Meal;
 
 public interface MealService {
@@ -11,5 +10,4 @@ public interface MealService {
     void updateMeal(Meal meal);
 
     void deleteMeal(Long id);
-
 }

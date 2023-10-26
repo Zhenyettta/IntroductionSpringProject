@@ -1,11 +1,10 @@
 package com.naukma.introductionspringproject.service;
 
-import com.naukma.introductionspringproject.dto.OrderDTO;
-import com.naukma.introductionspringproject.entity.OrderEntity;
+import com.naukma.introductionspringproject.model.Order;
 
 public interface OrderService {
-    OrderEntity createOrder(OrderDTO order);
-    OrderEntity readOrder(Long id);
-    void updateOrder(OrderDTO order);
+    Order createOrder(Order order);
+    Order readOrder(Long id);
+    void updateOrder(Order order);
     void deleteOrder(Long id);
 }

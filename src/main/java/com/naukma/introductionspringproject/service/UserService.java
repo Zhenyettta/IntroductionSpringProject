@@ -1,11 +1,10 @@
 package com.naukma.introductionspringproject.service;
 
-import com.naukma.introductionspringproject.dto.UserDTO;
-import com.naukma.introductionspringproject.entity.UserEntity;
+import com.naukma.introductionspringproject.model.User;
 
 public interface UserService {
-    UserEntity createUser(UserDTO user);
-    UserEntity readUser(Long id);
-    void updateUser(UserDTO user);
+    User createUser(User user);
+    User readUser(Long id);
+    void updateUser(User user);
     void deleteUser(Long id);
 }

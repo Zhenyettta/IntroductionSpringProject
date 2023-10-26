@@ -4,10 +4,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.naukma.introductionspringproject.config.LoginConfig;
-import com.naukma.introductionspringproject.dto.UserDTO;
 import com.naukma.introductionspringproject.entity.UserEntity;
 import com.naukma.introductionspringproject.exception.NotFoundException;
 import com.naukma.introductionspringproject.exception.UniqueEmailException;
+import com.naukma.introductionspringproject.model.User;
 import com.naukma.introductionspringproject.repository.UserRepo;
 import com.naukma.introductionspringproject.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -18,10 +18,9 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private final ModelMapper modelMapper;
     private final LoginConfig loginConfig;
     private final UserRepo userRepo;
-    private final ModelMapper modelMapper;
-
 
     @Autowired
     public UserServiceImpl(LoginConfig loginConfig, UserRepo userRepo, ModelMapper modelMapper) {
@@ -31,16 +30,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity createUser(UserDTO user) {
+    public User createUser(User user) {
         validateEmail(user.getEmail());
-        UserEntity user1 = modelMapper.map(user, UserEntity.class);
-        getForecast();
-        return userRepo.save(user1);
+//        getForecast(); artificial use of external API
+        userRepo.save(modelMapper.map(user, UserEntity.class));
+        return user;
     }
 
     @Override
-    public UserEntity readUser(Long id) {
-        return userRepo.findById(id).orElseThrow(() -> new NotFoundException("User not found by id " + id));
+    public User readUser(Long id) {
+        return modelMapper.map(userRepo.findById(id).orElseThrow(() -> new NotFoundException("User not found by id " + id)), User.class);
     }
 
     public void getForecast() {
@@ -49,6 +48,7 @@ public class UserServiceImpl implements UserService {
             String resourceUrl = "https://api.open-meteo.com/v1/forecast?latitude=50.450001&longitude=30.523333&hourly=temperature_2m&timezone=auto";
             String responseBody = restTemplate.getForObject(resourceUrl, String.class);
             JsonParser parser = new JsonParser();
+            assert responseBody != null;
             JsonObject jsonObject = parser.parse(responseBody).getAsJsonObject();
             JsonArray timeArray = jsonObject.get("hourly").getAsJsonObject().get("time").getAsJsonArray();
             JsonArray temperatureArray = jsonObject.get("hourly").getAsJsonObject().get("temperature_2m").getAsJsonArray();
@@ -63,12 +63,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(UserDTO user) {
+    public void updateUser(User user) {
         UserEntity userNew = userRepo.findById(user.getId()).orElseThrow(() -> new NotFoundException("User not found by id " + user.getId()));
         userNew.setFirstName(user.getFirstName());
-        userNew.setId(user.getId());
-        userNew.setEmail(user.getEmail());
         userNew.setLastName(user.getLastName());
+        userNew.setPhoneNumber(user.getPhoneNumber());
+        userNew.setEmail(user.getEmail());
         userNew.setPassword(user.getPassword());
         userRepo.save(userNew);
     }

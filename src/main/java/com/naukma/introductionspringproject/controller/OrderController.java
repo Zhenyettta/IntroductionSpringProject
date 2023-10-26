@@ -2,12 +2,14 @@ package com.naukma.introductionspringproject.controller;
 
 import com.naukma.introductionspringproject.config.HttpStatuses;
 import com.naukma.introductionspringproject.dto.OrderDTO;
+import com.naukma.introductionspringproject.model.Order;
 import com.naukma.introductionspringproject.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 @io.swagger.v3.oas.annotations.tags.Tag(name = "Order Management", description = "Operations pertaining to order in Order Management")
 public class OrderController {
-    OrderService orderService;
+    private final ModelMapper modelMapper;
+    private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(ModelMapper modelMapper, OrderService orderService) {
+        this.modelMapper = modelMapper;
         this.orderService = orderService;
     }
     @GetMapping("/{id}")
@@ -39,8 +43,8 @@ public class OrderController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "404", description = HttpStatuses.NOT_FOUND)
     })
-    public ResponseEntity<Object> updateOrder(@Parameter(description = "Update order object") @Valid @RequestBody OrderDTO order){
-        orderService.updateOrder(order);
+    public ResponseEntity<Object> updateOrder(@Parameter(description = "Update order object") @Valid @RequestBody OrderDTO orderDTO){
+        orderService.updateOrder(modelMapper.map(orderDTO, Order.class));
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PostMapping
@@ -49,8 +53,8 @@ public class OrderController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "409", description = HttpStatuses.CONFLICT)
     })
-    public ResponseEntity<Object> createOrder(@Parameter(description = "Create order object") @Valid @RequestBody OrderDTO category){
-        orderService.createOrder(category);
+    public ResponseEntity<Object> createOrder(@Parameter(description = "Create order object") @Valid @RequestBody OrderDTO orderDTO){
+        orderService.createOrder(modelMapper.map(orderDTO, Order.class));
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @DeleteMapping("/{id}")

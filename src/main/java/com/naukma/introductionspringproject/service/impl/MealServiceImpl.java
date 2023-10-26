@@ -1,7 +1,5 @@
 package com.naukma.introductionspringproject.service.impl;
 
-
-import com.naukma.introductionspringproject.entity.UserEntity;
 import com.naukma.introductionspringproject.exception.NotFoundException;
 import com.naukma.introductionspringproject.entity.MealEntity;
 import com.naukma.introductionspringproject.model.Meal;
@@ -25,8 +23,8 @@ public class MealServiceImpl implements MealService {
 
     private static final Marker MY_MARKER = MarkerManager.getMarker("MyMarker");
     private static final Logger logger = LogManager.getLogger(MealServiceImpl.class);
-    CategoryService categoryService;
-    MealRepo mealRepo;
+    private final CategoryService categoryService;
+    private final MealRepo mealRepo;
 
     @Autowired
     public MealServiceImpl(ModelMapper modelMapper, CategoryService categoryService, MealRepo mealRepo) {
