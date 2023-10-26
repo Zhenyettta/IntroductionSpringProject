@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public UserEntity createUser(UserDTO user) {
         validateEmail(user.getEmail());
         UserEntity user1 = modelMapper.map(user, UserEntity.class);
-         getForecast();
+        getForecast();
         return userRepo.save(user1);
     }
 
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         return userRepo.findById(id).orElseThrow(() -> new NotFoundException("User not found by id " + id));
     }
 
-    public void getForecast(){
+    public void getForecast() {
         RestTemplate restTemplate = new RestTemplate();
         try {
             String resourceUrl = "https://api.open-meteo.com/v1/forecast?latitude=50.450001&longitude=30.523333&hourly=temperature_2m&timezone=auto";
@@ -82,6 +82,6 @@ public class UserServiceImpl implements UserService {
 
     private void validateEmail(String email) {
         if (userRepo.findByEmail(email).isPresent())
-                throw new UniqueEmailException("The email address " + email + " is already in use");
+            throw new UniqueEmailException("The email address " + email + " is already in use");
     }
 }

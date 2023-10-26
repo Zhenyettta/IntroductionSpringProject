@@ -1,5 +1,6 @@
 package com.naukma.introductionspringproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,6 +9,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "categories")
+@JsonIgnoreProperties({"meals"})
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

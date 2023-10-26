@@ -22,16 +22,14 @@ public class MealEntity {
     @Column(nullable = false)
     private Integer amount;
 
-    @ToString.Exclude
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
-    @ToString.Exclude
     @ManyToMany(mappedBy = "meals")
     private List<OrderEntity> orders;
 
-    @ToString.Exclude
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "meals_tags",
             joinColumns = @JoinColumn(name = "meal_id"),
