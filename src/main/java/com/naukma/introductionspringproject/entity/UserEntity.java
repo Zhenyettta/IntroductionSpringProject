@@ -1,5 +1,6 @@
 package com.naukma.introductionspringproject.entity;
 
+import com.naukma.introductionspringproject.util.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -30,6 +31,9 @@ public class UserEntity {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.ROLE_USER;
 
     @Column(nullable = false)
     private String password;
