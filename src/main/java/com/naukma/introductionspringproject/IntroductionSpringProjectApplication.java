@@ -13,11 +13,8 @@ import org.springframework.context.annotation.Scope;
 
 //@ComponentScan(basePackages = "com.naukma")
 @SpringBootApplication
-@Import(com.naukma.springboot.DiscountUtilConfig.class)
 public class IntroductionSpringProjectApplication {
-	private static final Logger logger = LogManager.getLogger(IntroductionSpringProjectApplication.class);
 	public static void main(String[] args) {
-		logger.log(Level.WARN, "asd");
 		SpringApplication.run(IntroductionSpringProjectApplication.class, args);
 	}
 	@Bean
