@@ -3,6 +3,7 @@ package com.naukma.introductionspringproject.config;
 import com.naukma.introductionspringproject.util.JwtRequestFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -32,7 +33,17 @@ public class LoginConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/users/{id}").hasRole("USER")
+
+                        .requestMatchers("/categories*").hasRole("ADMIN")
+                        .requestMatchers("/users*").hasRole("ADMIN")
+                        .requestMatchers("/meals*").hasRole("ADMIN")
+                        .requestMatchers("/tags*").hasRole("ADMIN")
+                        .requestMatchers("/orders*").hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.GET, "/categories/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/meals/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/tags/{id}").hasRole("USER")
+
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
