@@ -39,10 +39,15 @@ public class LoginConfig {
                         .requestMatchers(HttpMethod.GET, "/tags/{id}").hasAnyRole("USER", "ADMIN")
 
                         .requestMatchers("/categories/*").hasRole("ADMIN")
+                        .requestMatchers("/categories").hasRole("ADMIN")
                         .requestMatchers("/users/*").hasRole("ADMIN")
+                        .requestMatchers("/users").hasRole("ADMIN")
                         .requestMatchers("/meals/*").hasRole("ADMIN")
+                        .requestMatchers("/meals").hasRole("ADMIN")
                         .requestMatchers("/tags/*").hasRole("ADMIN")
+                        .requestMatchers("/tags").hasRole("ADMIN")
                         .requestMatchers("/orders/*").hasRole("ADMIN")
+                        .requestMatchers("/orders").hasRole("ADMIN")
 
                         .anyRequest().denyAll())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
