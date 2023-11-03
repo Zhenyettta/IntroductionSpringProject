@@ -34,18 +34,17 @@ public class LoginConfig {
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/login").permitAll()
 
+                        .requestMatchers(HttpMethod.GET, "/categories/{id}").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/meals/{id}").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/tags/{id}").hasAnyRole("USER", "ADMIN")
+
                         .requestMatchers("/categories/*").hasRole("ADMIN")
                         .requestMatchers("/users/*").hasRole("ADMIN")
                         .requestMatchers("/meals/*").hasRole("ADMIN")
                         .requestMatchers("/tags/*").hasRole("ADMIN")
                         .requestMatchers("/orders/*").hasRole("ADMIN")
 
-                        .requestMatchers(HttpMethod.GET, "/categories/{id}").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/meals/{id}").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/tags/{id}").hasRole("USER")
-                        .requestMatchers("/users/*").hasRole("USER")
-
-                        .anyRequest().authenticated())
+                        .anyRequest().denyAll())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
