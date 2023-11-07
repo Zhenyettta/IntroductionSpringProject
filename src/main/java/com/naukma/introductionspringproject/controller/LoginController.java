@@ -1,45 +1,31 @@
 package com.naukma.introductionspringproject.controller;
 
-import com.naukma.introductionspringproject.dto.JwtAuthenticationResponse;
-import com.naukma.introductionspringproject.dto.LoginRequestDTO;
-import com.naukma.introductionspringproject.util.JwtService;
-import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.naukma.introductionspringproject.entity.MealEntity;
+import com.naukma.introductionspringproject.service.MealService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@RestController
-@RequestMapping("/login")
+import java.util.List;
+
+@Controller
 public class LoginController {
-    private final AuthenticationManager authenticationManager;
+    private final MealService mealService;
 
-    private final JwtService jwtService;
-
-    public LoginController(AuthenticationManager authenticationManager, JwtService jwtService) {
-        this.authenticationManager = authenticationManager;
-        this.jwtService = jwtService;
+    public LoginController(MealService mealService) {
+        this.mealService = mealService;
     }
 
-    @PostMapping()
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequestDTO loginRequest) {
+    @GetMapping("/login")
+    public String getLoginPage() {
+        return "login";
+    }
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String jwt = jwtService.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+    @GetMapping("/")
+    public String home(Model model) {
+        List<MealEntity> meals = mealService.getAllMeals();
+        model.addAttribute("meals", meals);
+        return "home";
     }
 }

@@ -17,6 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
 @Configuration
 @EnableWebSecurity
 public class LoginConfig {
@@ -37,6 +41,8 @@ public class LoginConfig {
                         .requestMatchers(HttpMethod.GET, "/categories/{id}").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/meals/{id}").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/tags/{id}").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/").hasAnyRole("USER", "ADMIN")
+
 
                         .requestMatchers("/categories/*").hasRole("ADMIN")
                         .requestMatchers("/categories").hasRole("ADMIN")
@@ -50,8 +56,11 @@ public class LoginConfig {
                         .requestMatchers("/orders").hasRole("ADMIN")
 
                         .anyRequest().denyAll())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/", true)
+                        .permitAll())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 

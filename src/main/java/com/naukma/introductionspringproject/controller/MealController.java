@@ -2,6 +2,7 @@ package com.naukma.introductionspringproject.controller;
 
 import com.naukma.introductionspringproject.config.HttpStatuses;
 import com.naukma.introductionspringproject.dto.MealDTO;
+import com.naukma.introductionspringproject.entity.MealEntity;
 import com.naukma.introductionspringproject.model.Meal;
 import com.naukma.introductionspringproject.service.MealService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/meals")
@@ -34,8 +37,18 @@ public class MealController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "404", description = HttpStatuses.NOT_FOUND)
     })
-    public ResponseEntity<Object> getById(@Parameter(description = "Id value for the meal you need to retrieve") @PathVariable Long id){
+    public ResponseEntity<Object> getById(@Parameter(description = "Id value for the meal you need to retrieve") @PathVariable Long id) {
         return new ResponseEntity<>(mealService.readMeal(id), HttpStatus.OK);
+    }
+
+    @GetMapping
+    @Operation(summary = "Get all meals")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = HttpStatuses.OK)
+    })
+    public ResponseEntity<List<MealEntity>> getAllMeals() {
+        List<MealEntity> meals = mealService.getAllMeals();
+        return new ResponseEntity<>(meals, HttpStatus.OK);
     }
 
     @PutMapping
@@ -44,7 +57,7 @@ public class MealController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "404", description = HttpStatuses.NOT_FOUND)
     })
-    public ResponseEntity<Object> updateMeal(@Parameter(description = "Update meal object") @Valid @RequestBody MealDTO mealDTO){
+    public ResponseEntity<Object> updateMeal(@Parameter(description = "Update meal object") @Valid @RequestBody MealDTO mealDTO) {
         mealService.updateMeal(modelMapper.map(mealDTO, Meal.class));
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -55,7 +68,7 @@ public class MealController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "409", description = HttpStatuses.CONFLICT)
     })
-    public ResponseEntity<Object> createMeal(@Parameter(description = "Create meal object") @Valid @RequestBody MealDTO mealDTO){
+    public ResponseEntity<Object> createMeal(@Parameter(description = "Create meal object") @Valid @RequestBody MealDTO mealDTO) {
         mealService.createMeal(modelMapper.map(mealDTO, Meal.class));
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -66,7 +79,7 @@ public class MealController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "404", description = HttpStatuses.NOT_FOUND)
     })
-    public ResponseEntity<Object> deleteMeal(@Parameter(description = "Id value for the meal you want to delete") @PathVariable Long id){
+    public ResponseEntity<Object> deleteMeal(@Parameter(description = "Id value for the meal you want to delete") @PathVariable Long id) {
         mealService.deleteMeal(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
