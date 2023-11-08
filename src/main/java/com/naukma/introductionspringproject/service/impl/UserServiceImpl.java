@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -81,6 +83,11 @@ public class UserServiceImpl implements UserService {
         if (userRepo.existsById(id))
             userRepo.deleteById(id);
         else throw new NotFoundException("User not found by id " + id);
+    }
+
+    @Override
+    public List<UserEntity> getAllUsers() {
+        return userRepo.findAll();
     }
 
     private void validateEmail(String email) {

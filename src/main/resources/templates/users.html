@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:extends="base" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<html th:extends="base" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- Required meta tags -->
@@ -22,26 +22,33 @@
     <a class="navbar-brand" th:href="@{/}">Project XYZ</a>
 </nav>
 
-<div sec:authorize="hasRole('ROLE_ADMIN')">
-       <a class="btn btn-primary" th:href="@{/users}" role="button">Link</a>
-</div>
+
+<a class="btn btn-primary" role="button" th:href="@{/}">Home</a>
+
 <div class="container my-3">
     <div class="card">
-        <h5 class="card-header">Meal Listing</h5>
+        <h5 class="card-header">User Listing</h5>
         <div class="card-body">
+            <a class="btn btn-primary mb-3" th:href="@{users/createUserForm}" role="button">Create User</a>
             <table class="table">
                 <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Name</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
                     <!-- Other columns here -->
                 </tr>
                 </thead>
                 <tbody>
                 <!-- Thymeleaf table generation here -->
-                <tr th:each="meal : ${meals}">
-                    <td th:text="${meal.id}"></td>
-                    <td th:text="${meal.name}"></td>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.firstName}"></td>
+                    <td th:text="${user.lastName}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.role}"></td>
 
                 </tr>
                 </tbody>
