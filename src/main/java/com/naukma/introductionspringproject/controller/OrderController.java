@@ -27,13 +27,14 @@ public class OrderController {
         this.modelMapper = modelMapper;
         this.orderService = orderService;
     }
+
     @GetMapping("/{id}")
     @Operation(summary = "Get an order by Id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "404", description = HttpStatuses.NOT_FOUND)
     })
-    public ResponseEntity<Object> getById(@Parameter(description = "Id value for the order you need to retrieve") @PathVariable Long id){
+    public ResponseEntity<Object> getById(@Parameter(description = "Id value for the order you need to retrieve") @PathVariable Long id) {
         return new ResponseEntity<>(orderService.readOrder(id), HttpStatus.OK);
     }
 
@@ -43,27 +44,29 @@ public class OrderController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "404", description = HttpStatuses.NOT_FOUND)
     })
-    public ResponseEntity<Object> updateOrder(@Parameter(description = "Update order object") @Valid @RequestBody OrderDTO orderDTO){
+    public ResponseEntity<Object> updateOrder(@Parameter(description = "Update order object") @Valid @RequestBody OrderDTO orderDTO) {
         orderService.updateOrder(modelMapper.map(orderDTO, Order.class));
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PostMapping
     @Operation(summary = "Create an order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "409", description = HttpStatuses.CONFLICT)
     })
-    public ResponseEntity<Object> createOrder(@Parameter(description = "Create order object") @Valid @RequestBody OrderDTO orderDTO){
+    public ResponseEntity<Object> createOrder(@Parameter(description = "Create order object") @Valid @RequestBody OrderDTO orderDTO) {
         orderService.createOrder(modelMapper.map(orderDTO, Order.class));
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete an order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "404", description = HttpStatuses.NOT_FOUND)
     })
-    public ResponseEntity<Object> deleteOrder(@Parameter(description = "Id value for the order you want to delete") @PathVariable Long id){
+    public ResponseEntity<Object> deleteOrder(@Parameter(description = "Id value for the order you want to delete") @PathVariable Long id) {
         orderService.deleteOrder(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

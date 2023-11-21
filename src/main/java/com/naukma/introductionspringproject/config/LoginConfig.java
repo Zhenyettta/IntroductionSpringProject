@@ -1,6 +1,8 @@
 package com.naukma.introductionspringproject.config;
 
 import com.naukma.introductionspringproject.util.JwtRequestFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -25,6 +27,7 @@ import java.util.TreeSet;
 @Configuration
 @EnableWebSecurity
 public class LoginConfig {
+    private final Logger logger = LoggerFactory.getLogger(LoginConfig.class);
     private final UserDetailsService userDetailsService;
     private final JwtRequestFilter jwtRequestFilter;
 
