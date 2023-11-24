@@ -6,10 +6,13 @@ import com.naukma.introductionspringproject.model.Meal;
 import com.naukma.introductionspringproject.service.MealService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,17 +34,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MealControllerTest {
     MealDTO mealDTO;
     @Autowired
-    private WebApplicationContext context;
+    WebApplicationContext context;
     @MockBean
-    private MealService mealService;
-    private MockMvc mvc;
-    private ObjectMapper mapper;
+    MealService mealService;
+    MockMvc mvc;
+    ModelMapper mapper;
+    ObjectMapper objectMapper;
+
 
     @BeforeEach
     public void setup() {
-        mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-
+        objectMapper = new ObjectMapper();
+        MockitoAnnotations.openMocks(this);
+//        mealService = context.getBean(MealService.class);
         mealDTO = new MealDTO();
+        mapper = new ModelMapper();
+        mvc = MockMvcBuilders.standaloneSetup(new MealController(mapper, mealService)).build();
         mealDTO.setId(2L);
         mealDTO.setName("Updated Meal");
         mealDTO.setPrice(123.0);
@@ -50,20 +58,18 @@ public class MealControllerTest {
         mealDTO.setOrderIds(Arrays.asList(1L, 2L));
         mealDTO.setTagIds(Arrays.asList(1L, 2L, 3L));
 
-        mapper = new ObjectMapper();
     }
 
     @WithMockUser(username = "123@gmail.com", roles = {"ADMIN"})
     @Test
     public void shouldGetMealByIdTest() throws Exception {
-        Meal mockedMeal = new Meal();
-        when(mealService.readMeal(1L)).thenReturn(mockedMeal);
+        when(mealService.readMeal(mealDTO.getId())).thenReturn(mapper.map(mealDTO, Meal.class));
 
-        mvc.perform(get("/meals/{id}", 1L)
+        mvc.perform(get("/meals/{id}", 2L)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
 
-        verify(mealService, times(1)).readMeal(1L);
+        verify(mealService, times(1)).readMeal(2L);
     }
 
     @WithMockUser(username = "123@gmail.com", roles = {"ADMIN"})
@@ -77,20 +83,20 @@ public class MealControllerTest {
     @WithMockUser(username = "123@gmail.com", roles = {"ADMIN"})
     @Test
     public void shouldCreateMealTest() throws Exception {
-        when(mealService.createMeal(any(Meal.class))).thenReturn(mapper.convertValue(mealDTO, Meal.class));
+        when(mealService.createMeal(any(Meal.class))).thenReturn(mapper.map(mealDTO, Meal.class));
         mvc.perform(post("/meals")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(mealDTO)))
+                        .content(objectMapper.writeValueAsString(mealDTO)))
                 .andExpect(status().isOk());
     }
 
     @WithMockUser(username = "123@gmail.com", roles = {"ADMIN"})
     @Test
     public void shouldUpdateMealTest() throws Exception {
-
+        when(mealService.readMeal(mealDTO.getId())).thenReturn(mapper.map(mealDTO, Meal.class));
 
         mvc.perform(put("/meals").contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(mealDTO)))
+                        .content(objectMapper.writeValueAsString(mealDTO)))
                 .andExpect(status().isOk());
     }
 

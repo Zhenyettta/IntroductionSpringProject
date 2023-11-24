@@ -79,7 +79,8 @@ public class CategoryControllerTest {
     @WithMockUser(username = "123@gmail.com", roles = {"ADMIN"})
     @Test
     public void shouldUpdateCategoryTest() throws Exception {
-        mockMvc.perform(put("/meals").contentType(MediaType.APPLICATION_JSON)
+        when(categoryService.readCategory(categoryDTO.getId())).thenReturn(objectMapper.convertValue(categoryDTO, Category.class));
+        mockMvc.perform(put("/categories").contentType(MediaType.APPLICATION_JSON)
                         .with(csrf())
                         .content(objectMapper.writeValueAsString(categoryDTO)))
                         .andExpect(status().isOk());

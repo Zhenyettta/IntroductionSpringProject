@@ -32,4 +32,6 @@ public class MealDTO {
 
     @NotNull(message = "Tag IDs cannot be null")
     private List<Long> tagIds;
+
+
 }
