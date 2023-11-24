@@ -44,6 +44,7 @@ public class LoginConfig {
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico").anonymous()
                         .requestMatchers(HttpMethod.GET, "/categories/{id}").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/meals/{id}").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/meals").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/tags/{id}").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/createUserForm").hasAnyRole( "ADMIN")

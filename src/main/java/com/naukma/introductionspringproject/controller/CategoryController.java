@@ -2,6 +2,8 @@ package com.naukma.introductionspringproject.controller;
 
 import com.naukma.introductionspringproject.config.HttpStatuses;
 import com.naukma.introductionspringproject.dto.CategoryDTO;
+import com.naukma.introductionspringproject.entity.CategoryEntity;
+import com.naukma.introductionspringproject.entity.MealEntity;
 import com.naukma.introductionspringproject.model.Category;
 import com.naukma.introductionspringproject.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
