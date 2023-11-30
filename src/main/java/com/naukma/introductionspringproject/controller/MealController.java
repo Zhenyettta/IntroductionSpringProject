@@ -4,6 +4,7 @@ import com.naukma.introductionspringproject.config.HttpStatuses;
 import com.naukma.introductionspringproject.dto.MealDTO;
 import com.naukma.introductionspringproject.entity.MealEntity;
 import com.naukma.introductionspringproject.model.Meal;
+import com.naukma.introductionspringproject.model.User;
 import com.naukma.introductionspringproject.service.MealService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -13,12 +14,15 @@ import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/meals")
 @Validated
 @io.swagger.v3.oas.annotations.tags.Tag(name = "Meal Management", description = "Operations pertaining to meal in Meal Management")
@@ -68,9 +72,19 @@ public class MealController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "409", description = HttpStatuses.CONFLICT)
     })
-    public ResponseEntity<Object> createMeal(@Parameter(description = "Create meal object") @Valid @RequestBody MealDTO mealDTO) {
+    public String createMeal(@Parameter(description = "Create meal object") @Valid @ModelAttribute MealDTO mealDTO,  BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "create-meal";
+        }
         mealService.createMeal(modelMapper.map(mealDTO, Meal.class));
-        return new ResponseEntity<>(HttpStatus.OK);
+        return "redirect:/";
+    }
+
+
+    @GetMapping("/createMealForm")
+    public String createMealForm(Model model) {
+        model.addAttribute("meal", new Meal());
+        return "create-meal";
     }
 
     @DeleteMapping("/{id}")

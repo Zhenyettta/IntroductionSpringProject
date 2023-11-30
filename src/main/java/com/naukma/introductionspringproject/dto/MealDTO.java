@@ -27,11 +27,6 @@ public class MealDTO {
     @NotNull(message = "Category ID cannot be null")
     private Long categoryId;
 
-    @NotNull(message = "Order IDs cannot be null")
     private List<Long> orderIds;
-
-    @NotNull(message = "Tag IDs cannot be null")
     private List<Long> tagIds;
-
-
 }

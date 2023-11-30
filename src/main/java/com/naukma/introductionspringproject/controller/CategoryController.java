@@ -6,12 +6,14 @@ import com.naukma.introductionspringproject.entity.CategoryEntity;
 import com.naukma.introductionspringproject.entity.MealEntity;
 import com.naukma.introductionspringproject.model.Category;
 import com.naukma.introductionspringproject.service.CategoryService;
+import com.naukma.introductionspringproject.service.impl.CategoryServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +27,7 @@ import java.util.List;
 @io.swagger.v3.oas.annotations.tags.Tag(name = "Category Management", description = "Operations pertaining to category in Category Management")
 public class CategoryController {
     private final ModelMapper modelMapper;
+
     private final CategoryService categoryService;
 
     public CategoryController(ModelMapper modelMapper, CategoryService categoryService) {

@@ -1,10 +1,12 @@
 package com.naukma.introductionspringproject.controller;
 
+
 import com.naukma.introductionspringproject.entity.MealEntity;
 import com.naukma.introductionspringproject.service.MealService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 
 import java.util.List;
 
