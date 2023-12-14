@@ -79,11 +79,8 @@ public class MealController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "409", description = HttpStatuses.CONFLICT)
     })
-    public String createMeal(@Parameter(description = "Create meal object") @Valid @ModelAttribute MealDTO mealDTO,  BindingResult bindingResult, Model model) {
+    public String createMeal(@Parameter(description = "Create meal object") @Valid @ModelAttribute MealDTO mealDTO,  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            List<Category> categories = categoryService.getAllCategories();
-            model.addAttribute("categories", categories);
-            System.out.println(categories);
             return "create-meal";
         }
         mealService.createMeal(modelMapper.map(mealDTO, Meal.class));
@@ -94,6 +91,8 @@ public class MealController {
     @GetMapping("/createMealForm")
     public String createMealForm(Model model) {
         model.addAttribute("meal", new Meal());
+        List<Category> categories = categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
         return "create-meal";
     }
 
