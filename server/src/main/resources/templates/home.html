@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:extends="base" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<html th:extends="base" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -16,13 +16,7 @@
 </head>
 
 <body>
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" th:href="@{/}">Project XYZ</a>
-</nav>
-
-<div sec:authorize="hasRole('ROLE_ADMIN')">
-       <a class="btn btn-primary" th:href="@{/users}" role="button">Link</a>
-</div>
+<div th:insert="navbar :: navbar">  </div>
 <div class="container my-3">
     <div class="card">
         <h5 class="card-header">Meal Listing</h5>
