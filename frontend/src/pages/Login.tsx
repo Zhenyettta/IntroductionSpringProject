@@ -26,6 +26,7 @@ export default function Login() {
                 setAreCredentialsWrong(false);
 
                 const token = response.data;
+                print(token)
                 handleLogin(token);
             })
             .catch(() => {
