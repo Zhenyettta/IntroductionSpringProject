@@ -1,0 +1,35 @@
+
+.table {
+    background-color: #32B260;
+}
+
+/* Change header row background color */
+.table thead th {
+    background-color: #32B260   ;
+}
+
+.table tbody td,
+.table tbody th {
+    padding: 8px;
+}
+.table thead th {
+    text-align: center;
+    color: white;
+}
+
+.table tbody td {
+    text-align: center;
+}
+
+.table tbody tr:hover {
+    background-color: #e6e6e6;
+}
+
+.table-bordered {
+    border: 1px solid #ccc;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #32B260 ;
+}
+/* table.css */

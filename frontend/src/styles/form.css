@@ -1,0 +1,34 @@
+.form-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent gray background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 4;
+}
+
+.form-main {
+    display: flex;
+    flex-direction: column;
+    width: 573px;
+    height: 524px;
+    background-color: white;
+    padding: 30px 100px 30px 100px;
+    position: relative;
+}
+
+.close-icon {
+    display: inline-block;
+    background-color: transparent;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+}
+
+.close-icon:hover {
+    border-color: var(--our-green);
+}

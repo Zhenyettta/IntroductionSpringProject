@@ -1,0 +1,74 @@
+.custom-card {
+    background-color: #fffcf8;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 393px;
+    height: 271px;
+}
+
+.custom-card .text-wrapper {
+    color: #000000;
+    font-family: "Montserrat-SemiBold", Helvetica;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 24px;
+    position: absolute;
+    top: 65px;
+    word-wrap: break-word;
+    width: 100%;
+    text-align: center;
+}
+
+.custom-card .description {
+    color: #000000;
+    font-family: "Montserrat-Regular", Helvetica;
+    font-size: 13px;
+    font-weight: 400;
+    left: 36px;
+    letter-spacing: 0;
+    line-height: 24px;
+    position: absolute;
+    text-align: center;
+    top: 123px;
+    width: 317px;
+}
+
+.custom-card .edit {
+    height: 37px;
+    left: 17px;
+    object-fit: cover;
+    position: absolute;
+    top: 14px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border-radius: 50%;
+}
+
+.custom-card .edit img {
+    height: 37px;
+}
+
+.custom-card .delete {
+    height: 37px;
+    right: 17px;
+    object-fit: cover;
+    position: absolute;
+    top: 14px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border-radius: 50%;
+}
+
+.custom-card .delete img {
+    height: 37px;
+}
