@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class Category {
-    private Long Id;
+    private Long id;
     private String name;
     private List<Long> mealIds;
 }

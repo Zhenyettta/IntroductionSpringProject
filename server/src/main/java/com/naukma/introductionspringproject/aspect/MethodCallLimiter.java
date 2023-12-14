@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Aspect
 @Component
 public class MethodCallLimiter {
-    private static final int MAX_LIMIT = 5;
+    private static final int MAX_LIMIT = 50;
     private final Map<String, Pair<Long, Integer>> methodCallCounts = new ConcurrentHashMap<>();
 
     @Around("execution(* com.naukma.introductionspringproject.service.impl.MealServiceImpl.getAllMeals())")

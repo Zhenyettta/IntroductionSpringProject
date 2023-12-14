@@ -14,5 +14,5 @@ public interface MealService {
 
     void deleteMeal(Long id);
 
-    List<MealEntity> getAllMeals();
+    List<Meal> getAllMeals();
 }

@@ -3,6 +3,7 @@ package com.naukma.introductionspringproject.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.naukma.introductionspringproject.dto.MealDTO;
 import com.naukma.introductionspringproject.model.Meal;
+import com.naukma.introductionspringproject.service.CategoryService;
 import com.naukma.introductionspringproject.service.MealService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,6 +41,8 @@ public class MealControllerTest {
     MockMvc mvc;
     ModelMapper mapper;
     ObjectMapper objectMapper;
+    @Autowired
+    CategoryService categoryService;
 
 
     @BeforeEach
@@ -49,7 +52,7 @@ public class MealControllerTest {
 //        mealService = context.getBean(MealService.class);
         mealDTO = new MealDTO();
         mapper = new ModelMapper();
-        mvc = MockMvcBuilders.standaloneSetup(new MealController(mapper, mealService)).build();
+        mvc = MockMvcBuilders.standaloneSetup(new MealController(mapper, mealService, categoryService)).build();
         mealDTO.setId(2L);
         mealDTO.setName("Updated Meal");
         mealDTO.setPrice(123.0);

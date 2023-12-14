@@ -14,6 +14,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MealServiceImpl implements MealService {
@@ -64,8 +65,14 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public List<MealEntity> getAllMeals() {
-        return mealRepo.findAll();
+    public List<Meal> getAllMeals() {
+        return mealRepo.findAll().stream()
+                .map(this::mapToMeal)
+                .collect(Collectors.toList());
+    }
+
+    public Meal mapToMeal(MealEntity mealEntity) {
+        return modelMapper.map(mealEntity, Meal.class);
     }
 
     // Очистити кеш для конкретного id

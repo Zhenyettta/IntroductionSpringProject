@@ -5,6 +5,7 @@ import com.naukma.introductionspringproject.dto.CategoryDTO;
 import com.naukma.introductionspringproject.entity.CategoryEntity;
 import com.naukma.introductionspringproject.entity.MealEntity;
 import com.naukma.introductionspringproject.model.Category;
+import com.naukma.introductionspringproject.model.Meal;
 import com.naukma.introductionspringproject.service.CategoryService;
 import com.naukma.introductionspringproject.service.impl.CategoryServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,5 +77,15 @@ public class CategoryController {
     public ResponseEntity<Object> deleteCategory(@Parameter(description = "Id value for the category you want to delete") @PathVariable Long id) {
         categoryService.deleteCategory(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping
+    @Operation(summary = "Get all categories")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = HttpStatuses.OK)
+    })
+    public ResponseEntity<List<Category>> getAllCategories() {
+        List<Category> categories = categoryService.getAllCategories();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 }

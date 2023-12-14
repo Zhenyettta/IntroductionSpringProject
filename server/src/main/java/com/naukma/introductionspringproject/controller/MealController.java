@@ -3,8 +3,11 @@ package com.naukma.introductionspringproject.controller;
 import com.naukma.introductionspringproject.config.HttpStatuses;
 import com.naukma.introductionspringproject.dto.MealDTO;
 import com.naukma.introductionspringproject.entity.MealEntity;
+import com.naukma.introductionspringproject.entity.UserEntity;
+import com.naukma.introductionspringproject.model.Category;
 import com.naukma.introductionspringproject.model.Meal;
 import com.naukma.introductionspringproject.model.User;
+import com.naukma.introductionspringproject.service.CategoryService;
 import com.naukma.introductionspringproject.service.MealService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,9 +33,12 @@ public class MealController {
     private final ModelMapper modelMapper;
     private final MealService mealService;
 
-    public MealController(ModelMapper modelMapper, MealService mealService) {
+    private final CategoryService categoryService;
+
+    public MealController(ModelMapper modelMapper, MealService mealService, CategoryService categoryService) {
         this.modelMapper = modelMapper;
         this.mealService = mealService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/{id}")
@@ -48,10 +54,11 @@ public class MealController {
     @GetMapping
     @Operation(summary = "Get all meals")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = HttpStatuses.OK)
+            @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
+            @ApiResponse(responseCode = "404", description = HttpStatuses.NOT_FOUND)
     })
-    public ResponseEntity<List<MealEntity>> getAllMeals() {
-        List<MealEntity> meals = mealService.getAllMeals();
+    public ResponseEntity<List<Meal>> getAllMeals() {
+        List<Meal> meals = mealService.getAllMeals();
         return new ResponseEntity<>(meals, HttpStatus.OK);
     }
 
@@ -72,8 +79,11 @@ public class MealController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "409", description = HttpStatuses.CONFLICT)
     })
-    public String createMeal(@Parameter(description = "Create meal object") @Valid @ModelAttribute MealDTO mealDTO,  BindingResult bindingResult) {
+    public String createMeal(@Parameter(description = "Create meal object") @Valid @ModelAttribute MealDTO mealDTO,  BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            List<Category> categories = categoryService.getAllCategories();
+            model.addAttribute("categories", categories);
+            System.out.println(categories);
             return "create-meal";
         }
         mealService.createMeal(modelMapper.map(mealDTO, Meal.class));

@@ -1,12 +1,17 @@
 package com.naukma.introductionspringproject.service.impl;
 
 import com.naukma.introductionspringproject.entity.CategoryEntity;
+import com.naukma.introductionspringproject.entity.MealEntity;
 import com.naukma.introductionspringproject.exception.NotFoundException;
 import com.naukma.introductionspringproject.model.Category;
+import com.naukma.introductionspringproject.model.Meal;
 import com.naukma.introductionspringproject.repository.CategoryRepo;
 import com.naukma.introductionspringproject.service.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -23,6 +28,17 @@ public class CategoryServiceImpl implements CategoryService {
     public Category createCategory(Category category) {
         categoryRepo.save(modelMapper.map(category, CategoryEntity.class));
         return category;
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        return categoryRepo.findAll().stream()
+                .map(this::mapToCategory)
+                .collect(Collectors.toList());
+    }
+
+    public Category mapToCategory(CategoryEntity categoryEntity) {
+        return modelMapper.map(categoryEntity, Category.class);
     }
 
     @Override

@@ -6,8 +6,8 @@
 </head>
 <body>
 <div class="container py-3">
-    <h3>Create Meal</h3>
-    <form action="#" th:object="${meal}" th:action="@{/meals}" method="post">
+    <h3>Create Category</h3>
+    <form action="#" th:object="${category}" th:action="@{/categories}" method="post">
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" th:field="*{name}" class="form-control" id="name" required>
@@ -21,12 +21,8 @@
             <input type="text" th:field="*{amount}" class="form-control" id="amount" required>
         </div>
         <div class="form-group">
-            <label for="categoryId">Category</label>
-            <select th:field="*{categoryId}" class="form-control" id="categoryId" required>
-                <option value="">Select a category</option>
-                <option th:each="category : ${categories}" th:value="${category.id}"
-                        th:text="${category.name}"></option>
-            </select>
+            <label for="categoryId">Category ID</label>
+            <input type="text" th:field="*{categoryId}" class="form-control" id="categoryId" required>
         </div>
         <button type="submit" class="btn btn-primary">Create</button>
     </form>

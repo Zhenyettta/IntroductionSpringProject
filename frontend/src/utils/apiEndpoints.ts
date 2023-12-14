@@ -1,4 +1,4 @@
-export const LOGIN_ENDPOINT = "http://localhost:8080/login"
+export const LOGIN_ENDPOINT = "http://localhost:8080/"
 export const CATEGORIES_ENDPOINT = "https://localhost:8081/api/categories"
 export const PRODUCTS_ENDPOINT = "https://localhost:8081/api/products"
 export const USERS_ENDPOINT = "https://localhost:8081/api/users"
