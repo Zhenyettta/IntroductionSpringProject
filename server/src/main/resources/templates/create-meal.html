@@ -5,6 +5,7 @@
     <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}">
 </head>
 <body>
+<div th:insert="navbar :: navbar">  </div>
 <div class="container py-3">
     <h3>Create Meal</h3>
     <form action="#" th:object="${meal}" th:action="@{/meals}" method="post">
