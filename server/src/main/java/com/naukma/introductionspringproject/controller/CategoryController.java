@@ -17,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,8 +85,9 @@ public class CategoryController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK)
     })
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public String getAllCategories(Model model) {
         List<Category> categories = categoryService.getAllCategories();
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+        model.addAttribute("categories", categories);
+        return "categories";
     }
 }

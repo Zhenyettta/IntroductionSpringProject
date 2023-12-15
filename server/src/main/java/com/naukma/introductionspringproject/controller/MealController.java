@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,8 +32,9 @@ import java.util.List;
 @io.swagger.v3.oas.annotations.tags.Tag(name = "Meal Management", description = "Operations pertaining to meal in Meal Management")
 public class MealController {
     private final ModelMapper modelMapper;
+    @Autowired
     private final MealService mealService;
-
+    @Autowired
     private final CategoryService categoryService;
 
     public MealController(ModelMapper modelMapper, MealService mealService, CategoryService categoryService) {
@@ -57,9 +59,10 @@ public class MealController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "404", description = HttpStatuses.NOT_FOUND)
     })
-    public ResponseEntity<List<Meal>> getAllMeals() {
+    public String getAllMeals(Model model) {
         List<Meal> meals = mealService.getAllMeals();
-        return new ResponseEntity<>(meals, HttpStatus.OK);
+        model.addAttribute("meals", meals);
+        return "meals";
     }
 
     @PutMapping
@@ -68,9 +71,12 @@ public class MealController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "404", description = HttpStatuses.NOT_FOUND)
     })
-    public ResponseEntity<Object> updateMeal(@Parameter(description = "Update meal object") @Valid @RequestBody MealDTO mealDTO) {
+    public String updateMeal(@Parameter(description = "Update meal object") @Valid @ModelAttribute MealDTO mealDTO, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "edit-meal";
+        }
         mealService.updateMeal(modelMapper.map(mealDTO, Meal.class));
-        return new ResponseEntity<>(HttpStatus.OK);
+        return "redirect:/";
     }
 
     @PostMapping
@@ -79,7 +85,7 @@ public class MealController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "409", description = HttpStatuses.CONFLICT)
     })
-    public String createMeal(@Parameter(description = "Create meal object") @Valid @ModelAttribute MealDTO mealDTO,  BindingResult bindingResult) {
+    public String createMeal(@Parameter(description = "Create meal object") @Valid @ModelAttribute MealDTO mealDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "create-meal";
         }
@@ -87,6 +93,14 @@ public class MealController {
         return "redirect:/";
     }
 
+
+    @GetMapping("/editMealForm")
+    public String createMealForm(@Parameter @Valid @ModelAttribute MealDTO mealDTO, Model model) {
+        model.addAttribute("meal", modelMapper.map(mealDTO, Meal.class));
+        List<Category> categories = categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
+        return "edit-meal";
+    }
 
     @GetMapping("/createMealForm")
     public String createMealForm(Model model) {
@@ -105,6 +119,12 @@ public class MealController {
     public ResponseEntity<Object> deleteMeal(@Parameter(description = "Id value for the meal you want to delete") @PathVariable Long id) {
         mealService.deleteMeal(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/deleteMeal/{id}")
+    public String deleteMealButton(@Parameter(description = "Id value for the meal you want to delete") @PathVariable Long id) {
+        mealService.deleteMeal(id);
+        return "redirect:/meals";
     }
 
 }

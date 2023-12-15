@@ -36,9 +36,7 @@ public class LoginController {
 
 
     @GetMapping("/")
-    public String home(Model model) {
-        List<Meal> meals = mealService.getAllMeals();
-        model.addAttribute("meals", meals);
+    public String home() {
         return "home";
     }
 }

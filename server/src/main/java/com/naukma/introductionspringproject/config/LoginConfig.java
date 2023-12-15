@@ -47,6 +47,7 @@ public class LoginConfig {
                         .requestMatchers(HttpMethod.GET, "/tags/{id}").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/createUserForm").hasAnyRole( "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/deleteMeal/{id}").hasAnyRole("ADMIN")
 
 
                         .requestMatchers("/categories/*").hasRole("ADMIN")

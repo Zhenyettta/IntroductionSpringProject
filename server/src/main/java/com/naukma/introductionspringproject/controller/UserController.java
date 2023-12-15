@@ -52,7 +52,7 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = HttpStatuses.OK),
             @ApiResponse(responseCode = "404", description = HttpStatuses.NOT_FOUND)
     })
-    public String getAll(Model model) {
+    public String getAllUsers(Model model) {
         List<UserEntity> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "users";

@@ -15,7 +15,7 @@
         <ul class="nav navbar-nav">
             <li sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link" th:href="@{/users}">Users</a></li>
 
-            <li><a class="nav-link" th:href="@{/meals}">Meals</a></li>
+            <li><a class="nav-link" th:href="@{meals}">Meals</a></li>
 
             <li sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link" th:href="@{/categories}">Categories</a></li>
 
