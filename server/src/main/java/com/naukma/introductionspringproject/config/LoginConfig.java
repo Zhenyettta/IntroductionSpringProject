@@ -39,7 +39,7 @@ public class LoginConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a -> a
-                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/login", "/signup/createUserForm", "/signup").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico").anonymous()
                         .requestMatchers(HttpMethod.GET, "/categories/{id}").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/meals/{id}").hasAnyRole("USER", "ADMIN")
